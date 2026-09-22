@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+import mongoose from 'mongoose'
 import { connectDB } from '@/lib/mongodb'
 import Todo from '@/models/Todo'
+import WeeklyPlan from '@/models/WeeklyPlan'
+import Goal from '@/models/Goal'
 import { keyBetween } from '@/lib/fractionalIndex'
 import { parseLocalDate } from '@/lib/utils'
 import { getSessionUserId } from '@/lib/auth'
@@ -17,6 +20,12 @@ export async function GET(request: NextRequest) {
     const weeklyPlanId = searchParams.get('weeklyPlanId')
     const goalId = searchParams.get('goalId')
 
+    if (weeklyPlanId && !mongoose.Types.ObjectId.isValid(weeklyPlanId)) {
+      return NextResponse.json({ error: '유효하지 않은 주간 계획입니다.' }, { status: 400 })
+    }
+    if (goalId && !mongoose.Types.ObjectId.isValid(goalId)) {
+      return NextResponse.json({ error: '유효하지 않은 목표입니다.' }, { status: 400 })
+    }
     const query: Record<string, unknown> = { userId }
     if (status) query.status = status
     if (weeklyPlanId) query.weeklyPlanId = weeklyPlanId
@@ -39,6 +48,24 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     if (!body.title || typeof body.title !== 'string') {
       return NextResponse.json({ error: 'title은 필수입니다.' }, { status: 400 })
+    }
+    if (body.weeklyPlanId) {
+      if (!mongoose.Types.ObjectId.isValid(body.weeklyPlanId)) {
+        return NextResponse.json({ error: '유효하지 않은 주간 계획입니다.' }, { status: 400 })
+      }
+      const plan = await WeeklyPlan.findOne({ _id: body.weeklyPlanId, userId })
+      if (!plan) {
+        return NextResponse.json({ error: '유효하지 않은 주간 계획입니다.' }, { status: 400 })
+      }
+    }
+    if (body.goalId) {
+      if (!mongoose.Types.ObjectId.isValid(body.goalId)) {
+        return NextResponse.json({ error: '유효하지 않은 목표입니다.' }, { status: 400 })
+      }
+      const goal = await Goal.findOne({ _id: body.goalId, userId })
+      if (!goal) {
+        return NextResponse.json({ error: '유효하지 않은 목표입니다.' }, { status: 400 })
+      }
     }
     const status = body.status ?? 'todo'
     const priority = body.priority ?? 'medium'

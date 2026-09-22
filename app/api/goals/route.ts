@@ -3,13 +3,14 @@ import { connectDB } from '@/lib/mongodb'
 import Goal from '@/models/Goal'
 import WeeklyPlan from '@/models/WeeklyPlan'
 import Todo from '@/models/Todo'
+import { getSessionUserId } from '@/lib/auth'
 
-async function withProgress(goal: { _id: unknown; toObject: () => Record<string, unknown> }) {
-  const plans = await WeeklyPlan.find({ goalId: goal._id }).lean()
+async function withProgress(goal: { _id: unknown; userId: unknown; toObject: () => Record<string, unknown> }) {
+  const plans = await WeeklyPlan.find({ goalId: goal._id, userId: goal.userId }).lean()
   if (plans.length === 0) {
     return { ...goal.toObject(), progress: 0 }
   }
-  const todos = await Todo.find({ weeklyPlanId: { $in: plans.map((p) => p._id) } }).lean()
+  const todos = await Todo.find({ weeklyPlanId: { $in: plans.map((p) => p._id) }, userId: goal.userId }).lean()
   const todosByPlan = new Map<string, typeof todos>()
   for (const t of todos) {
     const key = String(t.weeklyPlanId)
@@ -31,9 +32,13 @@ async function withProgress(goal: { _id: unknown; toObject: () => Record<string,
 }
 
 export async function GET() {
+  const userId = await getSessionUserId()
+  if (!userId) {
+    return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 })
+  }
   try {
     await connectDB()
-    const goals = await Goal.find().sort({ createdAt: -1 })
+    const goals = await Goal.find({ userId }).sort({ createdAt: -1 })
     const withProgressList = await Promise.all(goals.map((g) => withProgress(g)))
     return NextResponse.json(withProgressList)
   } catch {
@@ -42,13 +47,17 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const userId = await getSessionUserId()
+  if (!userId) {
+    return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 })
+  }
   try {
     await connectDB()
     const body = await request.json()
     if (!body.title || typeof body.title !== 'string') {
       return NextResponse.json({ error: 'title은 필수입니다.' }, { status: 400 })
     }
-    const goal = await Goal.create({ title: body.title, description: body.description })
+    const goal = await Goal.create({ title: body.title, description: body.description, userId })
     return NextResponse.json(goal, { status: 201 })
   } catch {
     return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })

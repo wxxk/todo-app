@@ -6,6 +6,7 @@ export interface Goal {
   title: string
   description?: string
   progress: number
+  userId: string
   createdAt: string
   updatedAt: string
 }
@@ -22,6 +23,7 @@ export interface WeeklyPlan {
   memo?: string
   retrospective?: string
   goalId?: string
+  userId: string
   progress?: number
   createdAt: string
   updatedAt: string

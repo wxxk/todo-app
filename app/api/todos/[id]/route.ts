@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import mongoose from 'mongoose'
 import { connectDB } from '@/lib/mongodb'
 import Todo, { TodoDocument } from '@/models/Todo'
+import WeeklyPlan from '@/models/WeeklyPlan'
+import Goal from '@/models/Goal'
 import { parseLocalDate } from '@/lib/utils'
 import { getSessionUserId } from '@/lib/auth'
 
@@ -60,6 +62,24 @@ export async function PUT(request: NextRequest, { params }: Params) {
     const body = await request.json()
     if (!body.title || typeof body.title !== 'string') {
       return NextResponse.json({ error: 'title은 필수입니다.' }, { status: 400 })
+    }
+    if (body.weeklyPlanId) {
+      if (!mongoose.Types.ObjectId.isValid(body.weeklyPlanId)) {
+        return NextResponse.json({ error: '유효하지 않은 주간 계획입니다.' }, { status: 400 })
+      }
+      const plan = await WeeklyPlan.findOne({ _id: body.weeklyPlanId, userId })
+      if (!plan) {
+        return NextResponse.json({ error: '유효하지 않은 주간 계획입니다.' }, { status: 400 })
+      }
+    }
+    if (body.goalId) {
+      if (!mongoose.Types.ObjectId.isValid(body.goalId)) {
+        return NextResponse.json({ error: '유효하지 않은 목표입니다.' }, { status: 400 })
+      }
+      const goal = await Goal.findOne({ _id: body.goalId, userId })
+      if (!goal) {
+        return NextResponse.json({ error: '유효하지 않은 목표입니다.' }, { status: 400 })
+      }
     }
     const set: Record<string, unknown> = { title: body.title, priority: body.priority }
     const unset: Record<string, ''> = {}

@@ -27,7 +27,7 @@ const TodoSchema = new Schema<TodoDocument>(
     weeklyPlanId: { type: Schema.Types.ObjectId, ref: 'WeeklyPlan' },
     goalId: { type: Schema.Types.ObjectId, ref: 'Goal' },
     // required for new documents; pre-login Todo documents lack this field until
-    // scripts/backfill-todo-user.mjs assigns them to a user (see docs/OAUTH_SETUP.md)
+    // scripts/backfill-user-id.mjs assigns them to a user (see docs/OAUTH_SETUP.md)
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true }
