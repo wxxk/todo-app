@@ -25,18 +25,13 @@ export default function WeeklyClient() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <Header title="주간 계획" description="최근 주간 계획 목록입니다." />
-        <button
-          onClick={() => setModalOpen(true)}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
-        >
+        <button onClick={() => setModalOpen(true)} className="btn-primary">
           + 새 주간 계획
         </button>
       </div>
 
-      {weeklyLoading && <p className="text-sm text-neutral-500">불러오는 중...</p>}
-      {!weeklyLoading && weeklyPlans.length === 0 && (
-        <p className="text-sm text-neutral-500">아직 등록된 주간 계획이 없습니다.</p>
-      )}
+      {weeklyLoading && <p className="text-body-sm text-muted">불러오는 중...</p>}
+      {!weeklyLoading && weeklyPlans.length === 0 && <p className="text-body-sm text-muted">아직 등록된 주간 계획이 없습니다.</p>}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {weeklyPlans.map((plan) => (
@@ -58,7 +53,7 @@ export default function WeeklyClient() {
         />
       </Modal>
 
-      {weeklyError && <p className="mt-4 text-sm text-red-600">{weeklyError}</p>}
+      {weeklyError && <p className="mt-4 text-body-sm text-error">{weeklyError}</p>}
     </div>
   )
 }

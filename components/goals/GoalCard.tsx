@@ -11,26 +11,24 @@ interface GoalCardProps {
 
 export default function GoalCard({ goal, onEdit, onDelete }: GoalCardProps) {
   return (
-    <div className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+    <div className="card-surface hover:shadow-card p-4">
       <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">{goal.title}</h3>
-        <div className="flex shrink-0 gap-2 text-sm">
-          <button onClick={() => onEdit(goal)} className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100">
+        <h3 className="text-title-md font-semibold text-ink">{goal.title}</h3>
+        <div className="flex shrink-0 gap-3 text-caption">
+          <button onClick={() => onEdit(goal)} className="text-muted hover:text-ink">
             수정
           </button>
           <button
             onClick={() => {
               if (confirm('이 목표를 삭제하시겠습니까?')) onDelete(goal._id)
             }}
-            className="text-red-500 hover:text-red-700"
+            className="text-error hover:text-error-hover"
           >
             삭제
           </button>
         </div>
       </div>
-      {goal.description && (
-        <p className="mb-3 text-sm text-neutral-600 dark:text-neutral-400">{goal.description}</p>
-      )}
+      {goal.description && <p className="mb-3 text-body-sm text-body">{goal.description}</p>}
       <ProgressBar progress={goal.progress} />
     </div>
   )

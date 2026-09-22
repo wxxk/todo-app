@@ -19,15 +19,12 @@ export default function WeekGrid({ todos, onDayClick }: WeekGridProps) {
         <div
           key={label}
           onClick={() => onDayClick(i)}
-          className="min-h-[120px] cursor-pointer rounded-md border border-neutral-200 p-2 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600"
+          className="min-h-[120px] cursor-pointer rounded-md border border-hairline p-2 hover:border-border-strong"
         >
-          <div className="mb-2 text-xs font-semibold text-neutral-500">{label}</div>
+          <div className="mb-2 text-caption-sm font-semibold text-muted">{label}</div>
           <div className="space-y-1">
             {byDay[i].map((todo) => (
-              <div
-                key={todo._id}
-                className="rounded bg-neutral-100 px-2 py-1 text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
-              >
+              <div key={todo._id} className="rounded-sm bg-surface-soft px-2 py-1 text-caption-sm text-body">
                 <div className="flex items-center justify-between gap-1">
                   <span className="truncate">{todo.title}</span>
                   <PriorityBadge priority={todo.priority} />

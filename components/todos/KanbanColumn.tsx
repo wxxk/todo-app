@@ -24,15 +24,13 @@ export default function KanbanColumn({ status, todos, onEdit, onDelete }: Kanban
   return (
     <div
       ref={setNodeRef}
-      className={`flex min-h-[300px] flex-col gap-2 rounded-lg border p-3 transition-colors ${
-        isOver
-          ? 'border-neutral-400 bg-neutral-100 dark:border-neutral-600 dark:bg-neutral-800/50'
-          : 'border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/50'
+      className={`flex min-h-[300px] flex-col gap-2 rounded-md border p-3 transition-colors ${
+        isOver ? 'border-border-strong bg-surface-strong' : 'border-hairline bg-surface-soft'
       }`}
     >
       <div className="mb-1 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">{STATUS_LABELS[status]}</h3>
-        <span className="text-xs text-neutral-400">{todos.length}</span>
+        <h3 className="text-title-sm font-semibold text-ink">{STATUS_LABELS[status]}</h3>
+        <span className="text-caption-sm text-muted-soft">{todos.length}</span>
       </div>
       <SortableContext items={todos.map((t) => t._id)} strategy={verticalListSortingStrategy}>
         <div className="flex flex-col gap-2">

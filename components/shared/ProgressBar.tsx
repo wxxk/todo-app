@@ -1,15 +1,12 @@
 export default function ProgressBar({ progress }: { progress: number }) {
   return (
     <div>
-      <div className="mb-1 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+      <div className="mb-1 flex items-center justify-between text-caption-sm text-muted">
         <span>진행률</span>
-        <span>{progress}%</span>
+        <span className="font-medium text-ink">{progress}%</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-800">
-        <div
-          className="h-full rounded-full bg-neutral-900 transition-all dark:bg-neutral-100"
-          style={{ width: `${progress}%` }}
-        />
+      <div className="h-2 w-full overflow-hidden rounded-full bg-surface-strong">
+        <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progress}%` }} />
       </div>
     </div>
   )

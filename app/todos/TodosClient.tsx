@@ -52,15 +52,12 @@ export default function TodosClient() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <Header title="할 일" description="드래그하여 상태를 변경할 수 있습니다." />
-        <button
-          onClick={openCreate}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
-        >
+        <button onClick={openCreate} className="btn-primary">
           + 새 할 일
         </button>
       </div>
 
-      {todosLoading && <p className="text-sm text-neutral-500">불러오는 중...</p>}
+      {todosLoading && <p className="text-body-sm text-muted">불러오는 중...</p>}
 
       <KanbanBoard todos={todos} onEdit={openEdit} onDelete={deleteTodo} onMove={handleMove} />
 

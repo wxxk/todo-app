@@ -58,59 +58,36 @@ export default function TodoForm({ initial, goals, weeklyPlans, onSubmit, onCanc
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">
-          제목 <span className="text-red-500">*</span>
+        <label className="field-label">
+          제목 <span className="text-error">*</span>
         </label>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-        />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="input-field" />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">설명</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={2}
-          className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-        />
+        <label className="field-label">설명</label>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} className="textarea-field" />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">우선순위</label>
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value as TodoPriority)}
-            className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-          >
+          <label className="field-label">우선순위</label>
+          <select value={priority} onChange={(e) => setPriority(e.target.value as TodoPriority)} className="input-field">
             <option value="high">높음</option>
             <option value="medium">보통</option>
             <option value="low">낮음</option>
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">마감일</label>
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-          />
+          <label className="field-label">마감일</label>
+          <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="input-field" />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">요일</label>
-          <select
-            value={dayOfWeek}
-            onChange={(e) => setDayOfWeek(e.target.value)}
-            className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-          >
+          <label className="field-label">요일</label>
+          <select value={dayOfWeek} onChange={(e) => setDayOfWeek(e.target.value)} className="input-field">
             <option value="">선택 안 함</option>
             {DAY_LABELS.map((label, i) => (
               <option key={i} value={i}>
@@ -120,12 +97,8 @@ export default function TodoForm({ initial, goals, weeklyPlans, onSubmit, onCanc
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">주간 계획</label>
-          <select
-            value={weeklyPlanId}
-            onChange={(e) => setWeeklyPlanId(e.target.value)}
-            className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-          >
+          <label className="field-label">주간 계획</label>
+          <select value={weeklyPlanId} onChange={(e) => setWeeklyPlanId(e.target.value)} className="input-field">
             <option value="">선택 안 함</option>
             {weeklyPlans.map((p) => (
               <option key={p._id} value={p._id}>
@@ -137,12 +110,8 @@ export default function TodoForm({ initial, goals, weeklyPlans, onSubmit, onCanc
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">1년 목표</label>
-        <select
-          value={goalId}
-          onChange={(e) => setGoalId(e.target.value)}
-          className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
-        >
+        <label className="field-label">1년 목표</label>
+        <select value={goalId} onChange={(e) => setGoalId(e.target.value)} className="input-field">
           <option value="">선택 안 함</option>
           {goals.map((g) => (
             <option key={g._id} value={g._id}>
@@ -153,18 +122,10 @@ export default function TodoForm({ initial, goals, weeklyPlans, onSubmit, onCanc
       </div>
 
       <div className="flex justify-end gap-2">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-md px-4 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
-        >
+        <button type="button" onClick={onCancel} className="btn-secondary">
           취소
         </button>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
-        >
+        <button type="submit" disabled={submitting} className="btn-primary">
           저장
         </button>
       </div>

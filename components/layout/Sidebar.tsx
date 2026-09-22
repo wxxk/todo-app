@@ -29,9 +29,9 @@ export default function Sidebar({ user }: { user: SidebarUser | null }) {
   }
 
   return (
-    <aside className="w-full shrink-0 border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 sm:flex sm:h-screen sm:w-56 sm:flex-col sm:border-b-0 sm:border-r">
+    <aside className="w-full shrink-0 border-b border-hairline bg-canvas sm:flex sm:h-screen sm:w-56 sm:flex-col sm:border-b-0 sm:border-r">
       <div className="p-4">
-        <h1 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">할 일 관리</h1>
+        <h1 className="text-title-md font-semibold tracking-tight text-primary">할 일 관리</h1>
       </div>
       <nav className="flex gap-1 overflow-x-auto px-2 pb-2 sm:flex-col sm:overflow-visible sm:pb-4">
         {NAV_ITEMS.map((item) => {
@@ -40,10 +40,8 @@ export default function Sidebar({ user }: { user: SidebarUser | null }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
-                active
-                  ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900'
-                  : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
+              className={`whitespace-nowrap rounded-sm px-3 py-2 text-nav-link font-semibold transition-colors ${
+                active ? 'bg-surface-soft text-ink' : 'text-muted hover:bg-surface-soft hover:text-ink'
               }`}
             >
               {item.label}
@@ -52,34 +50,19 @@ export default function Sidebar({ user }: { user: SidebarUser | null }) {
         })}
       </nav>
 
-      <div className="mt-auto border-t border-neutral-200 p-4 dark:border-neutral-800">
+      <div className="mt-auto border-t border-hairline p-4">
         {user ? (
           <div className="flex items-center gap-2">
             {user.avatarUrl && (
-              <Image
-                src={user.avatarUrl}
-                alt={user.username}
-                width={28}
-                height={28}
-                className="rounded-full"
-                unoptimized
-              />
+              <Image src={user.avatarUrl} alt={user.username} width={28} height={28} className="rounded-full" unoptimized />
             )}
-            <span className="flex-1 truncate text-sm font-medium text-neutral-700 dark:text-neutral-300">
-              {user.username}
-            </span>
-            <button
-              onClick={handleLogout}
-              className="text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
-            >
+            <span className="flex-1 truncate text-title-sm font-medium text-ink">{user.username}</span>
+            <button onClick={handleLogout} className="btn-text">
               로그아웃
             </button>
           </div>
         ) : (
-          <a
-            href="/auth/github"
-            className="block rounded-md bg-neutral-900 px-3 py-2 text-center text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
-          >
+          <a href="/auth/github" className="btn-primary block w-full text-center">
             GitHub로 로그인
           </a>
         )}

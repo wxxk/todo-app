@@ -40,18 +40,13 @@ export default function GoalsClient() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <Header title="1년 목표" description="장기 목표를 세우고 주간 계획과 연결하세요." />
-        <button
-          onClick={openCreate}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
-        >
+        <button onClick={openCreate} className="btn-primary">
           + 새 목표
         </button>
       </div>
 
-      {goalsLoading && <p className="text-sm text-neutral-500">불러오는 중...</p>}
-      {!goalsLoading && goals.length === 0 && (
-        <p className="text-sm text-neutral-500">아직 등록된 목표가 없습니다.</p>
-      )}
+      {goalsLoading && <p className="text-body-sm text-muted">불러오는 중...</p>}
+      {!goalsLoading && goals.length === 0 && <p className="text-body-sm text-muted">아직 등록된 목표가 없습니다.</p>}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {goals.map((goal) => (

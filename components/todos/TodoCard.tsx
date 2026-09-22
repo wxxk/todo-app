@@ -35,26 +35,18 @@ export default function TodoCard({ todo, onEdit, onDelete, overlay }: TodoCardPr
       style={style}
       {...(overlay ? {} : attributes)}
       {...(overlay ? {} : listeners)}
-      className="cursor-grab space-y-1.5 rounded-md border border-neutral-200 bg-white p-3 shadow-sm active:cursor-grabbing dark:border-neutral-800 dark:bg-neutral-900"
+      className="card-surface hover:shadow-card cursor-grab space-y-1.5 p-3 active:cursor-grabbing"
     >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{todo.title}</p>
+        <p className="text-body-sm font-medium text-ink">{todo.title}</p>
         <PriorityBadge priority={todo.priority} />
       </div>
-      {todo.description && (
-        <p className="line-clamp-2 text-xs text-neutral-500 dark:text-neutral-400">{todo.description}</p>
-      )}
+      {todo.description && <p className="line-clamp-2 text-caption-sm text-muted">{todo.description}</p>}
       {todo.dueDate && (
-        <p className={`text-xs ${overdue ? 'font-medium text-red-500' : 'text-neutral-400'}`}>
-          마감: {formatDate(todo.dueDate)}
-        </p>
+        <p className={`text-caption-sm ${overdue ? 'font-medium text-error' : 'text-muted-soft'}`}>마감: {formatDate(todo.dueDate)}</p>
       )}
-      <div className="flex justify-end gap-2 text-xs">
-        <button
-          onPointerDown={(e) => e.stopPropagation()}
-          onClick={() => onEdit(todo)}
-          className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
-        >
+      <div className="flex justify-end gap-3 text-caption-sm">
+        <button onPointerDown={(e) => e.stopPropagation()} onClick={() => onEdit(todo)} className="text-muted hover:text-ink">
           수정
         </button>
         <button
@@ -62,7 +54,7 @@ export default function TodoCard({ todo, onEdit, onDelete, overlay }: TodoCardPr
           onClick={() => {
             if (confirm('이 할 일을 삭제하시겠습니까?')) onDelete(todo._id)
           }}
-          className="text-red-500 hover:text-red-700"
+          className="text-error hover:text-error-hover"
         >
           삭제
         </button>

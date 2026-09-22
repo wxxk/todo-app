@@ -59,9 +59,9 @@ export default function DashboardClient() {
       <Header title="대시보드" description="이번 주 현황을 한눈에 확인하세요." />
 
       {!currentPlan && (
-        <div className="rounded-lg border border-dashed border-neutral-300 p-6 text-center dark:border-neutral-700">
-          <p className="mb-3 text-sm text-neutral-500">이번 주 주간 계획이 아직 없습니다.</p>
-          <Link href="/weekly" className="text-sm font-medium text-neutral-900 underline dark:text-neutral-100">
+        <div className="rounded-md border border-dashed border-border-strong p-6 text-center">
+          <p className="mb-3 text-body-sm text-muted">이번 주 주간 계획이 아직 없습니다.</p>
+          <Link href="/weekly" className="text-body-sm font-medium text-ink underline">
             주간 계획 만들기
           </Link>
         </div>
@@ -69,12 +69,10 @@ export default function DashboardClient() {
 
       {currentPlan && (
         <>
-          <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+          <section className="card-surface p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
-                {formatDate(currentPlan.weekStart)} 주간 목표
-              </h3>
-              <Link href={`/weekly/${currentPlan._id}`} className="text-xs text-neutral-500 hover:underline">
+              <h3 className="text-title-sm font-semibold text-body">{formatDate(currentPlan.weekStart)} 주간 목표</h3>
+              <Link href={`/weekly/${currentPlan._id}`} className="text-caption-sm text-muted hover:underline">
                 상세 보기 →
               </Link>
             </div>
@@ -87,30 +85,30 @@ export default function DashboardClient() {
           </section>
 
           <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-800 dark:bg-neutral-900">
-              <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{statusCounts.todo}</p>
-              <p className="text-xs text-neutral-500">할 일</p>
+            <div className="card-surface p-4 text-center">
+              <p className="text-[40px] leading-tight font-bold text-ink">{statusCounts.todo}</p>
+              <p className="text-caption-sm text-muted">할 일</p>
             </div>
-            <div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-800 dark:bg-neutral-900">
-              <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{statusCounts.doing}</p>
-              <p className="text-xs text-neutral-500">진행 중</p>
+            <div className="card-surface p-4 text-center">
+              <p className="text-[40px] leading-tight font-bold text-ink">{statusCounts.doing}</p>
+              <p className="text-caption-sm text-muted">진행 중</p>
             </div>
-            <div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-800 dark:bg-neutral-900">
-              <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{statusCounts.done}</p>
-              <p className="text-xs text-neutral-500">완료</p>
+            <div className="card-surface p-4 text-center">
+              <p className="text-[40px] leading-tight font-bold text-primary">{statusCounts.done}</p>
+              <p className="text-caption-sm text-muted">완료</p>
             </div>
           </section>
 
           {goals.length > 0 && (
-            <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-              <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300">1년 목표별 이번 주 할 일</h3>
+            <section className="card-surface p-4">
+              <h3 className="mb-3 text-title-sm font-semibold text-body">1년 목표별 이번 주 할 일</h3>
               <ul className="space-y-2">
                 {goals.map((g) => (
-                  <li key={g._id} className="flex items-center justify-between text-sm">
-                    <Link href="/goals" className="text-neutral-700 hover:underline dark:text-neutral-300">
+                  <li key={g._id} className="flex items-center justify-between text-body-sm">
+                    <Link href="/goals" className="text-body hover:underline">
                       {g.title}
                     </Link>
-                    <span className="text-neutral-400">{goalCounts.get(g._id) ?? 0}건</span>
+                    <span className="text-muted-soft">{goalCounts.get(g._id) ?? 0}건</span>
                   </li>
                 ))}
               </ul>
